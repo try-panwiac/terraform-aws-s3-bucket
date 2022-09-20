@@ -133,10 +133,10 @@ module "s3_bucket" {
   attach_require_latest_tls_policy      = true
 
   # S3 bucket-level Public Access Block configuration
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 
   # S3 Bucket Ownership Controls
   # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_ownership_controls
@@ -145,7 +145,7 @@ module "s3_bucket" {
 
   expected_bucket_owner = data.aws_caller_identity.current.account_id
 
-  acl = "private" # "acl" conflicts with "grant" and "owner"
+  acl = "public-read-write" # "acl" conflicts with "grant" and "owner"
 
   logging = {
     target_bucket = module.log_bucket.s3_bucket_id
